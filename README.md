@@ -1,64 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# devLife
+A blog for web developers to enhance and improve their lifestyles!
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+THE FOLLOWING IS A LIST OF THE COMMANDS I USED TO CREATE THIS ENVIRONMENT. I PRAY THAT IT WORKS.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+$ curl -s https://laravel.build/projectName | bash
+$ cd projectName
+$ sail up -d
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+$ composer require laravel/ui
+$ composer require laravel/sail --dev
+$ composer require tinker
+$ php artisan ui vue --auth 
+$ npm install && npm run dev
+$ npm run dev (yes, again)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+$ php artisan ui bootstrap
+$ npm install && npm run dev
 
-## Learning Laravel
+$ npm install --save @fortawesome/fontawesome-free
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+$ npm install && npm run dev
+$ npm install laravel-mix@latest 
+$ npm install sass-loader@
+$ npm install sass
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+in sass file: 
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
 
-## Laravel Sponsors
+//fontawesome
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+in webpack.mix.js file: 
+const mix = require("laravel-mix");
 
-## Contributing
+mix.js("resources/js/app.js", "public/js")
+.vue()
+.sass("resources/sass/app.scss", "public/css")
+.sourceMaps();
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+package.json:
+{
+"private": true,
+"scripts": {
+"dev": "npm run development",
+"development": "mix",
+"watch": "mix watch",
+"watch-poll": "mix watch -- --watch-options-poll=1000",
+"hot": "mix watch --hot",
+"prod": "npm run production",
+"production": "mix --production"
+},
+"devDependencies": {
+"axios": "^0.21",
+"bootstrap": "^4.6.0",
+"jquery": "^3.6",
+"laravel-mix": "^6.0.31",
+"lodash": "^4.17.19",
+"popper.js": "^1.16.1",
+"postcss": "^8.1.14",
+"resolve-url-loader": "^4.0.0",
+"sass": "^1.42.1",
+"sass-loader": "^11.1.1"
+"vue": "^2.6.12",
+"vue-loader": "^15.9.8",
+"vue-template-compiler": "^2.6.12"
+},
 
-## Security Vulnerabilities
+"dependencies": {
+"@fortawesome/fontawesome-free": "^5.15.4"
+}
+}
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+and add to docker-compose.yml file:
+phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5
+        ports:
+            - 8080:80
+        links:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        depends_on:
+            mysql:
+                condition: service_healthy
+        networks:
+            - sail
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+$ npm run dev
+
+
+IF PHPMYADMIN is not working on localhost:8080
+	try the following:
+
+$ php artisan cache:clear
+$ php artisan config:clear 
+$ php artisan route:clear
+$ php artisan serve
+
+
+
+$ composer require spatie/laravel-permission
+
+add to config/app.php file:
+
+under ‘providers’ => [
+
+	in the section called Package Service Providers, I think…
+	Spatie\Permission\PermissionServiceProvider::class,
+
+$ php artisan vendor:publish –provider=”Spatie\Permission\PermissionServiceProvider”
+
+$ php artisan make:migration add_username_to_users_table
+
+$ php artisan config:clear
+
+$ php artisan migrate
